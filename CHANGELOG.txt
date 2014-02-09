@@ -1,5 +1,5 @@
 
-Libraries 7.x-2.x, xxxx-xx-xx
+Libraries 7.x-2.2, 2014-02-09
 -----------------------------
 #2046919 by tstoeckler: Clarify 'version' docs.
 #1946110 by munroe_richard: Allow uppercase letters as library machine names.
