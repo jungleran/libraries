@@ -30,7 +30,9 @@
  *     changes of implementing modules and to support different versions of a
  *     library simultaneously (though only one version can be installed per
  *     site). A valid use-case is an external library whose version cannot be
- *     determined programmatically.
+ *     determined programmatically. Either 'version' or 'version callback' (or
+ *     'version arguments' in case libraries_get_version() is being used as a
+ *     version callback) must be declared.
  *   - version callback: (optional) The name of a function that detects and
  *     returns the full version string of the library. The first argument is
  *     always $library, an array containing all library information as described
