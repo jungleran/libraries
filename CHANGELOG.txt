@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#1953260 by tstoeckler: Improve documentation of libraries_get_version().
 #1855918 by tstoeckler: Make integration file loading backwards-compatible.
 #1876124 by tstoeckler: Fix integration files for themes.
 #1876124 by tstoeckler: Add tests for theme-provided library information.

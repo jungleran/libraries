@@ -51,8 +51,9 @@
  *     the version callback as separate arguments in the order they were
  *     declared. The default version callback libraries_get_version() expects a
  *     single, associative array with named keys:
- *     - file: The filename to parse for the version, relative to the library
- *       path. For example: 'docs/changelog.txt'.
+ *     - file: The filename to parse for the version, relative to the path
+ *       speficied as the 'library path' property (see above). For example:
+ *       'docs/changelog.txt'.
  *     - pattern: A string containing a regular expression (PCRE) to match the
  *       library version. For example: '@version\s+([0-9a-zA-Z\.-]+)@'. Note
  *       that the returned version is not the match of the entire pattern (i.e.
