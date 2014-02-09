@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2046919 by tstoeckler: Clarify 'version' docs.
 #1946110 by munroe_richard: Allow uppercase letters as library machine names.
 #1953260 by tstoeckler: Improve documentation of libraries_get_version().
 #1855918 by tstoeckler: Make integration file loading backwards-compatible.
