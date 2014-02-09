@@ -141,7 +141,7 @@ function libraries_scan_info_files() {
   $files = array();
   foreach ($directories as $dir) {
     if (file_exists($dir)) {
-      $files = array_merge($files, file_scan_directory($dir, '@^[a-z0-9._-]+\.libraries\.info$@', array(
+      $files = array_merge($files, file_scan_directory($dir, '@^[A-Za-z0-9._-]+\.libraries\.info$@', array(
         'key' => 'name',
         'recurse' => FALSE,
       )));
