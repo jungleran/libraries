@@ -450,6 +450,8 @@ function libraries_info_defaults(&$library, $name) {
     'versions' => array(),
     'integration files' => array(),
     'callbacks' => array(),
+    // @todo Remove in 7.x-3.x
+    'post-load integration files' => FALSE,
   );
   $library['callbacks'] += array(
     'info' => array(),
@@ -691,6 +693,33 @@ function libraries_load($name, $variant = NULL) {
  *   The number of loaded files.
  */
 function libraries_load_files($library) {
+  // Load integration files.
+  if (!$library['post-load integration files'] && !empty($library['integration files'])) {
+    $enabled_themes = array();
+    foreach (list_themes() as $theme_name => $theme) {
+      if ($theme->status) {
+        $enabled_themes[] = $theme_name;
+      }
+    }
+    foreach ($library['integration files'] as $provider => $files) {
+      if (module_exists($provider)) {
+        libraries_load_files(array(
+          'files' => $files,
+          'path' => '',
+          'library path' => drupal_get_path('module', $provider),
+          'post-load integration files' => FALSE,
+        ));
+      }
+      elseif (in_array($provider, $enabled_themes)) {
+        libraries_load_files(array(
+          'files' => $files,
+          'path' => '',
+          'library path' => drupal_get_path('theme', $provider),
+          'post-load integration files' => FALSE,
+        ));
+      }
+    }
+  }
 
   // Construct the full path to the library for later use.
   $path = $library['library path'];
@@ -743,7 +772,7 @@ function libraries_load_files($library) {
   }
 
   // Load integration files.
-  if (!empty($library['integration files'])) {
+  if ($library['post-load integration files'] && !empty($library['integration files'])) {
     $enabled_themes = array();
     foreach (list_themes() as $theme_name => $theme) {
       if ($theme->status) {
@@ -756,6 +785,7 @@ function libraries_load_files($library) {
           'files' => $files,
           'path' => '',
           'library path' => drupal_get_path('module', $provider),
+          'post-load integration files' => FALSE,
         ));
       }
       elseif (in_array($provider, $enabled_themes)) {
@@ -763,6 +793,7 @@ function libraries_load_files($library) {
           'files' => $files,
           'path' => '',
           'library path' => drupal_get_path('theme', $provider),
+          'post-load integration files' => FALSE,
         ));
       }
     }

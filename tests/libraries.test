@@ -468,6 +468,11 @@ class LibrariesTestCase extends DrupalWebTestCase {
     $this->assertRaw('libraries_test_theme.css', 'Integration file loading: libraries_test_theme.css found');
     $this->assertRaw('libraries_test_theme.inc', 'Integration file loading: libraries_test_theme.inc found');
 
+    // Test loading of post-load integration files.
+    $this->drupalGet('libraries-test-module/module-integration-files-post-load');
+    // If the files were not loaded correctly, a fatal error occurs.
+    $this->assertResponse(200, 'Post-load integration files are loaded correctly.');
+
     // Test version overloading.
     $this->drupalGet('libraries-test-module/versions');
     $this->assertLibraryFiles('example_2', 'Version overloading');
