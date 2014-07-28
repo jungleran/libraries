@@ -1,6 +1,7 @@
 
 Libraries 6.x-1.x, xxxx-xx-xx
 -----------------------------
+#1386250 by tstoeckler: Clarify module and library installation in README.txt.
 
 Libraries 6.x-1.0, 2010-01-27
 -----------------------------
