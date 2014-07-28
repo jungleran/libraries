@@ -693,6 +693,10 @@ function libraries_load($name, $variant = NULL) {
  *   The number of loaded files.
  */
 function libraries_load_files($library) {
+  // As this key was added after 7.x-2.1 cached library structures might not
+  // have it.
+  $library += array('post-load integration files' => FALSE);
+
   // Load integration files.
   if (!$library['post-load integration files'] && !empty($library['integration files'])) {
     $enabled_themes = array();

@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2193969 by tstoeckler: Avoid warnings for stale library caches.
 #2287529 by drupalshrek, tstoeckler: Update installation link in README.txt.
 
 Libraries 7.x-2.2, 2014-02-09
