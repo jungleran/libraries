@@ -1,6 +1,8 @@
 
 Libraries 7.x-1.x, xxxx-xx-xx
 -----------------------------
+#2287529 by drupalshrek, tstoeckler: Update installation link in README.txt.
+#1386250 by tstoeckler: Clarify module and library installation in README.txt.
 
 Libraries 7.x-1.0, 2010-01-27
 -----------------------------
