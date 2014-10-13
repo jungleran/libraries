@@ -6,7 +6,13 @@ Libraries 7.x-3.x, xxxx-xx-xx
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2352251 by netw3rker: Fix incorrect hook name in libraries.api.php.
 #2352237 by netw3rker, tstoeckler: Allow clearing the libraries cache from Drush.
+#2193969 by tstoeckler: Avoid warnings for stale library caches.
+#2287529 by drupalshrek, tstoeckler: Update installation link in README.txt.
+
+Libraries 7.x-2.2, 2014-02-09
+-----------------------------
 #2046919 by tstoeckler: Clarify 'version' docs.
 #1946110 by munroe_richard: Allow uppercase letters as library machine names.
 #1953260 by tstoeckler: Improve documentation of libraries_get_version().

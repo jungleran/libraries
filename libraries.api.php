@@ -467,7 +467,7 @@ function hook_libraries_info_alter(&$libraries) {
  * @return
  *   An array of paths.
  */
-function hook_libraries_paths() {
+function hook_libraries_info_file_paths() {
   // Taken from the Libraries test module, which needs to specify the path to
   // the test library.
   return array(drupal_get_path('module', 'libraries_test') . '/example');
