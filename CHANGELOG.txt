@@ -6,6 +6,7 @@ Libraries 7.x-3.x, xxxx-xx-xx
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2352237 by netw3rker, tstoeckler: Allow clearing the libraries cache from Drush.
 #2046919 by tstoeckler: Clarify 'version' docs.
 #1946110 by munroe_richard: Allow uppercase letters as library machine names.
 #1953260 by tstoeckler: Improve documentation of libraries_get_version().

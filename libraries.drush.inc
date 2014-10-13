@@ -40,6 +40,25 @@ See libraries-list for a list of registered libraries.');
 }
 
 /**
+ * Implements hook_drush_cache_clear().
+ *
+ * @see drush_cache_clear_types()
+ */
+function libraries_drush_cache_clear(&$types) {
+  $types['libraries'] = 'libraries_drush_invalidate_cache';
+}
+
+/**
+ * Clears the library cache.
+ */
+function libraries_drush_invalidate_cache() {
+  // @see drupal_flush_all_caches()
+  foreach (libraries_flush_caches() as $table) {
+    cache_clear_all('*', $table, TRUE);
+  }
+}
+
+/**
  * Lists registered library information.
  */
 function libraries_drush_list() {
