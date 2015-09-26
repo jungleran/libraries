@@ -33,7 +33,7 @@ function libraries_flush_caches() {
  * @param $base_path
  *   Whether to prefix the resulting path with base_path().
  *
- * @return
+ * @return string
  *   The path to the specified library or FALSE if the library wasn't found.
  *
  * @ingroup libraries
@@ -67,7 +67,7 @@ function libraries_get_path($name, $base_path = FALSE) {
  * in both the site-wide directory and site-specific directory, only the
  * site-specific version will be listed.
  *
- * @return
+ * @return array
  *   A list of library directories.
  *
  * @ingroup libraries
@@ -122,7 +122,7 @@ function libraries_get_libraries() {
  * - sites/$sitename/libraries
  * - any directories specified via hook_libraries_info_file_paths()
  *
- * @return
+ * @return array
  *   An array of info files, keyed by library name. The values are the paths of
  *   the files.
  */
@@ -870,4 +870,38 @@ function libraries_get_version($library, $options) {
     $options['lines']--;
   }
   fclose($file);
+}
+
+/**
+ * Implements hook_help().
+ */
+function libraries_help($path, $arg) {
+  switch ($path) {
+    case 'admin/reports/libraries':
+      return t('Click on a library for a status report or detailed installation instructions in case the library is not installed correctly.');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function libraries_menu() {
+  $items = array();
+  $items['admin/reports/libraries'] = array(
+    'title' => 'Libraries',
+    'description' => 'An overview of libraries installed on this site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('libraries_admin_overview'),
+    'access arguments' => array('access site reports'),
+    'file' => 'libraries.admin.inc'
+  );
+  $items['admin/reports/libraries/%'] = array(
+    'title' => 'Library status report',
+    'description' => 'Status overview for a single library',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('libraries_admin_library_status_form', 3),
+    'access arguments' => array('access site reports'),
+    'file' => 'libraries.admin.inc'
+  );
+  return $items;
 }
