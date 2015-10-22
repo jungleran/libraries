@@ -531,7 +531,7 @@ function libraries_detect($name) {
       $library['version'] = call_user_func_array($library['version callback'], array_merge(array($library), $library['version arguments']));
     }
     else {
-      $library['version'] = $library['version callback']($library, $library['version arguments']);
+      $library['version'] = call_user_func($library['version callback'], $library, $library['version arguments']);
     }
     if (empty($library['version'])) {
       $library['error'] = 'not detected';
