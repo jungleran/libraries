@@ -895,7 +895,7 @@ function libraries_menu() {
     'access arguments' => array('access site reports'),
     'file' => 'libraries.admin.inc'
   );
-  $items['admin/reports/libraries/%'] = array(
+  $items['admin/reports/libraries/%libraries_ui'] = array(
     'title' => 'Library status report',
     'description' => 'Status overview for a single library',
     'page callback' => 'drupal_get_form',
@@ -904,4 +904,28 @@ function libraries_menu() {
     'file' => 'libraries.admin.inc'
   );
   return $items;
+}
+
+/**
+ * Loads library information for display in the user interface.
+ *
+ * This can be used as a menu loader function by specifying a '%libraries_ui'
+ * parameter in a path.
+ *
+ * We do not use libraries_load() (and, thus, a '%libraries' parameter) directly
+ * for displaying library information in the user interface as we do not want
+ * the library files to be loaded.
+ *
+ * @param string $name
+ *   The machine name of a library to return registered information for.
+ *
+ * @return array|false
+ *   An associative array containing registered information for the library
+ *   specified by $name, or FALSE if the library $name is not registered.
+ *
+ * @see libraries_detect()
+ * @see libraries_menu()
+ */
+function libraries_ui_load($name) {
+  return libraries_detect($name);
 }

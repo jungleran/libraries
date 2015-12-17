@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#819610 by Pol, tstoeckler: Show the provider in the UI.
 #2634732 by Rob Holmes, tstoeckler: Sort libraries by title in the UI.
 #2585395 by robinsonsarah01: Allow object methods as version callbacks.
 #819610 by tstoeckler, Pol: Provide a status report for library information.
