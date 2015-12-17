@@ -27,7 +27,8 @@ function libraries_admin_overview(array $form, array &$form_state) {
   foreach (libraries_info() as $name => $info) {
     $libraries[$name] = libraries_detect($name);
   }
-  ksort($libraries);
+
+  uasort($libraries, 'libraries_sort_title');
 
   foreach ($libraries as $machine_name => $library) {
     $actions = array();
@@ -276,6 +277,28 @@ function libraries_admin_library_status_form(array $form, array &$form_state, $n
   }
 
   return $form;
+}
+
+/**
+ * Sorts libraries by name.
+ *
+ * This function can be used as a callback for usort() or uasort().
+ *
+ * @param array $a
+ *   The first library.
+ * @param array $b
+ *   The second library.
+ *
+ * @return int
+ *   Returns -1 if $a is considered smaller than $b, 1 if $a considered greater
+ *   than $b and 0 if $a and $b are considered equal.
+ *
+ * @see strnatcasecmp()
+ * @see usort()
+ * @see uasort()
+ */
+function libraries_sort_title(array $a, array $b) {
+  return strnatcasecmp($a['name'], $b['name']);
 }
 
 /**
