@@ -16,6 +16,15 @@
  */
 class LibrariesUnitTest extends DrupalUnitTestCase {
 
+  /**
+   * Provides metadata about this test.
+   *
+   * @return array
+   *   An array of test metadata with the following keys:
+   *   - name: The name of the test.
+   *   - description: The description of the test.
+   *   - group: The group of the test.
+   */
   public static function getInfo() {
     return array(
       'name' => 'Libraries API unit tests',

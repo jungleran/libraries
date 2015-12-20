@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+by tstoeckler: Prevent LibrariesWebTestBase from being displayed in the UI.
 #819610 by tstoeckler: Add tests for the Libraries UI.
 #1884246 by BR0kEN, tstoeckler: Show the provider in drush libraries-list
 #819610 by Pol, tstoeckler: Show the provider in the UI.
