@@ -429,12 +429,15 @@ function &libraries_info($name = NULL) {
 /**
  * Applies default properties to a library definition.
  *
- * @library
+ * @param array $library
  *   An array of library information, passed by reference.
- * @name
+ * @param string $name
  *   The machine name of the passed-in library.
+ *
+ * @return array
+ *   The library information array with defaults populated.
  */
-function libraries_info_defaults(&$library, $name) {
+function libraries_info_defaults(array &$library, $name) {
   $library += array(
     'machine name' => $name,
     'name' => $name,
@@ -472,12 +475,15 @@ function libraries_info_defaults(&$library, $name) {
 /**
  * Tries to detect a library and its installed version.
  *
- * @param $name
- *   The machine name of a library to return registered information for.
+ * @param string $name
+ *   (optional) The machine name of a library to detect and return registered
+ *   information for. If omitted, information about all registered libraries is
+ *   returned.
  *
  * @return array|false
- *   An associative array containing registered information for the library
- *   specified by $name, or FALSE if the library $name is not registered.
+ *   An associative array containing registered information for all libraries,
+ *   the registered information for the library specified by $name, or FALSE if
+ *   the library $name is not registered.
  *   In addition to the keys returned by libraries_info(), the following keys
  *   are contained:
  *   - installed: A boolean indicating whether the library is installed. Note
@@ -491,7 +497,15 @@ function libraries_info_defaults(&$library, $name) {
  *
  * @see libraries_info()
  */
-function libraries_detect($name) {
+function libraries_detect($name = NULL) {
+  if (!isset($name)) {
+    $libraries = &libraries_info();
+    foreach ($libraries as $name => $library) {
+      libraries_detect($name);
+    }
+    return $libraries;
+  }
+
   // Re-use the statically cached value of libraries_info() to save memory.
   $library = &libraries_info($name);
 

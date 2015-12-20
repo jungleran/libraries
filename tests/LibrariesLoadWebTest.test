@@ -264,6 +264,20 @@ class LibrariesLoadWebTest extends LibrariesWebTestBase {
   }
 
   /**
+   * Tests libraries_detect() without a $name parameter.
+   */
+  public function testLibrariesDetectAll() {
+    // Test that an array with all library information is returned and that the
+    // libraries are properly detected.
+    $libraries = libraries_detect();
+    $this->verbose('<pre>' . var_export($libraries, TRUE) . '</pre>');
+    $this->assertEqual($libraries['example_missing']['error'], 'not found');
+    $this->assertEqual($libraries['example_undetected_version']['error'], 'not detected');
+    $this->assertEqual($libraries['example_unsupported_version']['error'], 'not supported');
+    $this->assertEqual($libraries['example_supported_version']['installed'], TRUE);
+  }
+
+  /**
    * Tests libraries_load().
    */
   public function testLibrariesLoad() {

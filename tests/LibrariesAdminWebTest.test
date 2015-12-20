@@ -46,7 +46,7 @@ class LibrariesAdminWebTest extends LibrariesWebTestBase {
     // Make sure that all the libraries are listed.
     $libraries = libraries_info();
     $this->assertTrue($libraries);
-    foreach (libraries_info() as $library) {
+    foreach ($libraries as $library) {
       $this->assertText($library['name']);
       $this->assertLinkByHref('admin/reports/libraries/' . $library['machine name']);
     }

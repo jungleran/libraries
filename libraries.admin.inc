@@ -23,9 +23,7 @@ function libraries_admin_overview(array $form, array &$form_state) {
   $header = array(t('Name'), t('Status'), t('Installed version'), t('Provider'), t('Links'));
   $rows = array();
 
-  foreach (libraries_info() as $name => $info) {
-    $libraries[$name] = libraries_detect($name);
-  }
+  $libraries = libraries_detect();
   uasort($libraries, 'libraries_admin_sort_title');
 
   foreach ($libraries as $machine_name => $library) {

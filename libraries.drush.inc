@@ -42,10 +42,7 @@ function libraries_drush_invalidate_cache() {
  * Command callback. Show a list of registered libraries.
  */
 function drush_libraries_list() {
-  $libraries = array();
-  foreach (libraries_info() as $name => $info) {
-    $libraries[$name] = libraries_detect($name);
-  }
+  $libraries = libraries_detect();
   ksort($libraries);
 
   if (empty($libraries)) {
