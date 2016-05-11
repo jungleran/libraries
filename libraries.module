@@ -443,6 +443,7 @@ function libraries_info_defaults(array &$library, $name) {
     'name' => $name,
     'vendor url' => '',
     'download url' => '',
+    'download file url' => '',
     'path' => '',
     'library path' => NULL,
     'version callback' => 'libraries_get_version',

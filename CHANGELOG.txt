@@ -1,6 +1,7 @@
 
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#1884246 by BR0kEN, tstoeckler et al: Allow downloading libraries via Drush.
 by tstoeckler: Allow detecting all libraries by calling libraries_detect().
 by tstoeckler: Prevent LibrariesWebTestBase from being displayed in the UI.
 #819610 by tstoeckler: Add tests for the Libraries UI.
