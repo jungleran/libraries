@@ -1,5 +1,5 @@
 
-Libraries 7.x-2.x, xxxx-xx-xx
+Libraries 7.x-2.3, 2016-05-12
 -----------------------------
 #1884246 by BR0kEN, tstoeckler et al: Allow downloading libraries via Drush.
 by tstoeckler: Allow detecting all libraries by calling libraries_detect().
