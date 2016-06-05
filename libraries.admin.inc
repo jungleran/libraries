@@ -20,39 +20,96 @@
  *   The form array for the overview form.
  */
 function libraries_admin_overview(array $form, array &$form_state) {
-  $header = array(t('Name'), t('Status'), t('Installed version'), t('Provider'), t('Links'));
-  $rows = array();
+  // Only show status for libraries with an error.
+  $header_installed = array(t('Name'), t('Version'), t('Provider'), t('Links'));
+  $header_error = array(t('Name'), t('Status'), t('Version'), t('Provider'), t('Links'));
+  // For unregistered libraries the only information we can show is the path.
+  $header_unregistered = array(t('Name'), t('Path'));
 
-  $libraries = libraries_detect();
-  uasort($libraries, 'libraries_admin_sort_title');
+  $rows_installed = array();
+  $rows_error = array();
+  $rows_unregistered = array();
 
-  foreach ($libraries as $machine_name => $library) {
+  // Registered libraries: we prefer to use libraries_detect() since it provides
+  // library metadata.
+  $libraries_registered = libraries_detect();
+  uasort($libraries_registered, 'libraries_admin_sort_title');
+
+  // Unregistered libraries: modules can depend on Libraries API without sharing
+  // metadata by using libraries_get_path(). Libraries can also be placed in the
+  // filesystem that are incorrectly installed, a wrong version, or a standalone
+  // not connected to any module. In these cases, libraries_get_libraries()
+  // provides a full library list. Libraries found by libraries_get_libraries(),
+  // but not identified by libraries_detect, are displayed in a separate table.
+  $libraries_unregistered = libraries_get_libraries();
+  natcasesort($libraries_unregistered);
+
+  foreach ($libraries_registered as $machine_name => $library) {
     $actions = array();
+    $row = array();
 
     if ($library['vendor url']) {
-      $actions[] = l('Homepage', $library['vendor url']);
+      $actions[] = l(t('Homepage'), $library['vendor url']);
     }
     if ($library['download url']) {
-      $actions[] = l('Download', $library['download url']);
+      $actions[] = l(t('Download'), $library['download url']);
     }
 
-    $rows[] = array(
-      'data' => array(
-        l($library['name'], 'admin/reports/libraries/' . $machine_name),
-        ($library['installed'] ? t('OK') : drupal_ucfirst($library['error'])),
-        (isset($library['version']) ? $library['version'] : ''),
-        libraries_admin_get_provider_with_type($library),
-        implode(' | ', $actions),
-      ),
-      'class' => ($library['installed'] ? array('ok') : array('error')),
-    );
+    $row['data'][] = l($library['name'], 'admin/reports/libraries/' . $machine_name);
+    // Only show status for libraries with an error. See above.
+    if (!$library['installed']) {
+      $row['data'][] = drupal_ucfirst($library['error']);
+    }
+    $row['data'][] = isset($library['version']) ? $library['version'] : '';
+    $row['data'][] = libraries_admin_get_provider_with_type($library);
+    $row['data'][] = implode(' | ', $actions);
+    $row['class'] = $library['installed'] ? array('ok') : array('warning');
+
+    if ($library['installed']) {
+      $rows_installed[] = $row;
+    }
+    else {
+      $rows_error[] = $row;
+    }
+
+    // Filter registered libraries from unregistered libraries.
+    unset($libraries_unregistered[$library['machine name']]);
   }
 
-  $form['libraries']['list'] = array(
+  // Build table of registered libraries with installed status.
+  $form['libraries']['installed'] = array(
     '#theme' => 'table',
-    '#header' => $header,
-    '#rows' => $rows,
-    '#empty' => t('There are currently no libraries installed'),
+    '#header' => $header_installed,
+    '#rows' => $rows_installed,
+    '#empty' => t('There are currently no libraries that are registered and installed.'),
+    '#prefix' => '<h2>' . t('Installed libraries') . '</h2><div class="description">' . t('These libraries are registered and installed correctly.') . '</div>',
+  );
+
+  // Build table of registered libraries with error status.
+  $form['libraries']['error'] = array(
+    '#theme' => 'table',
+    '#header' => $header_error,
+    '#rows' => $rows_error,
+    '#empty' => t('There are currently no libraries that are registered but not installed.'),
+    '#prefix' => '<h2>' . t('Uninstalled libraries') . '</h2><div class="description">' . t('These libraries are registered but not installed. They may not need to be installed in case a module or theme provides optional integration with a library.') . '</div>',
+  );
+
+  // Build table of unregistered libraries.
+  foreach ($libraries_unregistered as $name => $path) {
+    $rows_unregistered[] = array(
+      'data' => array(
+        $name,
+        $path,
+      ),
+    );
+  }
+  $form['libraries']['unregistered'] = array(
+    '#theme' => 'table',
+    '#header' => $header_unregistered,
+    '#rows' => $rows_unregistered,
+    // Do not show the table at all, if there are no unregistered libraries.
+    '#access' => (bool) $libraries_unregistered,
+    '#prefix' => '<h2>' . t('Unregistered libraries') . '</h2><div class="description">' . t('These libraries were found in the filesystem but there is no metadata about them.') . '</div>',
   );
 
   return $form;
@@ -99,11 +156,11 @@ function libraries_admin_library_status_form(array $form, array &$form_state, $l
         break;
 
       case 'missing dependency':
-        $form['instructions']['instruction']['#markup'] = t('There a missing dependency in your configuration that prevent this library to work properly.') . '<br>';
+        $form['instructions']['instruction']['#markup'] = t('There is a missing dependency in your configuration that prevents this library from working properly.') . '<br>';
         break;
 
       case 'incompatible dependency':
-        $form['instructions']['instruction']['#markup'] = t('There an incompatible dependency in your configuration that prevent this library to work properly.') . '<br>';
+        $form['instructions']['instruction']['#markup'] = t('There is an incompatible dependency in your configuration that prevents this library from working properly.') . '<br>';
         break;
     }
   }

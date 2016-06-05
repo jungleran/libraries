@@ -1,5 +1,6 @@
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2724925 by ron_s, tstoeckler: Separate installed from uninstalled libraries.
 
 Libraries 7.x-2.3, 2016-05-12
 -----------------------------
@@ -96,16 +97,10 @@ by sun: Fixed testbot breaks upon .info file without .module file.
 #719896 by tstoeckler, sun: Added starting point for hook_libraries_info().
 
 
-Libraries 7.x-1.x, xxxx-xx-xx
------------------------------
-
 Libraries 7.x-1.0, 2010-01-27
 -----------------------------
 #743522 by sun: Ported to D7.
 
-
-Libraries 6.x-1.x, xxxx-xx-xx
------------------------------
 
 Libraries 6.x-1.0, 2010-01-27
 -----------------------------
