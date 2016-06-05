@@ -41,7 +41,19 @@ class LibrariesAdminWebTest extends LibrariesWebTestBase {
    */
   public function testLibrariesReportOverview() {
     $this->getWithPermissions(array('access site reports'), 'admin/reports/libraries');
-    $this->assertRaw('Libraries');
+    // Assert the page title and table titles show up.
+    $this->assertText('Libraries');
+    $this->assertRaw('<h2>Installed</h2>');
+    $this->assertRaw('<h2>Uninstalled</h2>');
+
+    // Make sure the table headings show up.
+    $this->assertText('Name');
+    $this->assertText('Status');
+    $this->assertText('Version');
+    $this->assertText('Variants');
+    $this->assertText('Dependencies');
+    $this->assertText('Provider');
+    $this->assertText('Links');
 
     // Make sure that all the libraries are listed.
     $libraries = libraries_info();
@@ -51,8 +63,7 @@ class LibrariesAdminWebTest extends LibrariesWebTestBase {
       $this->assertLinkByHref('admin/reports/libraries/' . $library['machine name']);
     }
 
-    // Make sure that all possible statuses are displayed.
-    $this->assertText('OK');
+    // Make sure that all possible error statuses are displayed.
     $this->assertText('Not found');
     $this->assertText('Not detected');
     $this->assertText('Not supported');

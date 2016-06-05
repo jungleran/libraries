@@ -20,9 +20,10 @@
  *   The form array for the overview form.
  */
 function libraries_admin_overview(array $form, array &$form_state) {
+  // Only show variants for installed libraries.
+  $header_installed = array(t('Name'), t('Version'), t('Variants'), t('Dependencies'), t('Provider'), t('Links'));
   // Only show status for libraries with an error.
-  $header_installed = array(t('Name'), t('Version'), t('Provider'), t('Links'));
-  $header_error = array(t('Name'), t('Status'), t('Version'), t('Provider'), t('Links'));
+  $header_error = array(t('Name'), t('Status'), t('Version'), t('Dependencies'), t('Provider'), t('Links'));
   // For unregistered libraries the only information we can show is the path.
   $header_unregistered = array(t('Name'), t('Path'));
 
@@ -61,6 +62,10 @@ function libraries_admin_overview(array $form, array &$form_state) {
       $row['data'][] = drupal_ucfirst($library['error']);
     }
     $row['data'][] = isset($library['version']) ? $library['version'] : '';
+    if ($library['installed']) {
+      $row['data'][] = implode(', ', array_keys($library['variants']));
+    }
+    $row['data'][] = libraries_admin_get_dependencies($library);
     $row['data'][] = libraries_admin_get_provider_with_type($library);
     $row['data'][] = implode(' | ', $actions);
     $row['class'] = $library['installed'] ? array('ok') : array('warning');
@@ -541,6 +546,28 @@ function &libraries_admin_path_to_tree(array &$items, $path) {
  */
 function libraries_admin_sort_title(array $a, array $b) {
   return strnatcasecmp($a['name'], $b['name']);
+}
+
+/**
+ * Returns the library's dependencies, if any.
+ *
+ * @param array $library
+ *   A library information array.
+ *
+ * @return string
+ *   The dependencies.
+ */
+function libraries_admin_get_dependencies($library) {
+  $dependencies = array();
+  foreach ($library['dependencies'] as $dependency_name) {
+    if ($dependency = libraries_info($dependency_name)) {
+      $dependencies[] = $dependency['name'];
+    }
+    else {
+      $dependencies[] = $dependency_name;
+    }
+  }
+  return implode(', ', $dependencies);
 }
 
 /**

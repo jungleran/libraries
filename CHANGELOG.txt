@@ -1,5 +1,6 @@
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#819610 by tstoeckler: Show variants and dependencies in the UI.
 #2724925 by ron_s, tstoeckler: Separate installed from uninstalled libraries.
 
 Libraries 7.x-2.3, 2016-05-12
