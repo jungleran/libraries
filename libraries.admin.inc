@@ -120,6 +120,14 @@ function libraries_admin_overview(array $form, array &$form_state) {
     '#access' => (bool) $libraries_unregistered,
   );
 
+  // Clear the cached library information so that the library can be loaded if
+  // it was just downloaded. Because these instructions use libraries_detect()
+  // directly, they will never use the cached information, but this avoids the
+  // overview showing a library as installed but it not being loadable.
+  foreach (libraries_flush_caches() as $bin) {
+    cache_clear_all(NULL, $bin);
+  }
+
   return $form;
 }
 

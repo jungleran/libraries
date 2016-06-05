@@ -1,5 +1,6 @@
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2341955 by sadashiv, tstoeckler: Clear library cache on library report.
 #819610 by tstoeckler: Show variants and dependencies in the UI.
 #2724925 by ron_s, tstoeckler: Separate installed from uninstalled libraries.
 
