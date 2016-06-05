@@ -893,7 +893,7 @@ function libraries_get_version($library, $options) {
 function libraries_help($path, $arg) {
   switch ($path) {
     case 'admin/reports/libraries':
-      return t('Click on a library for a status report or detailed installation instructions in case the library is not installed correctly.');
+      return t('Click on a library for a status report or detailed installation instructions.');
   }
 }
 
@@ -943,4 +943,20 @@ function libraries_menu() {
  */
 function libraries_ui_load($name) {
   return libraries_detect($name);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function libraries_theme($existing, $type, $theme, $path) {
+  // Because we extend the 'table' theme function, fetch the respective
+  // variables dynamically.
+  $common_theme = drupal_common_theme();
+  $variables = $common_theme['table']['variables'] + array('title' => '', 'description' => '');
+  return array(
+    'libraries_table_with_title' => array(
+      'variables' => $variables,
+      'file' => 'libraries.theme.inc',
+    ),
+  );
 }

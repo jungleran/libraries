@@ -78,20 +78,22 @@ function libraries_admin_overview(array $form, array &$form_state) {
 
   // Build table of registered libraries with installed status.
   $form['libraries']['installed'] = array(
-    '#theme' => 'table',
+    '#theme' => 'libraries_table_with_title',
+    '#title' => t('Installed'),
     '#header' => $header_installed,
     '#rows' => $rows_installed,
+    '#description' => t('These libraries are registered and installed correctly.'),
     '#empty' => t('There are currently no libraries that are registered and installed.'),
-    '#prefix' => '<h2>' . t('Installed libraries') . '</h2><div class="description">' . t('These libraries are registered and installed correctly.') . '</div>',
   );
 
   // Build table of registered libraries with error status.
   $form['libraries']['error'] = array(
-    '#theme' => 'table',
+    '#theme' => 'libraries_table_with_title',
+    '#title' => t('Uninstalled'),
     '#header' => $header_error,
     '#rows' => $rows_error,
+    '#description' => t('These libraries are registered but not installed. They may not need to be installed in case a module or theme provides optional integration with a library.'),
     '#empty' => t('There are currently no libraries that are registered but not installed.'),
-    '#prefix' => '<h2>' . t('Uninstalled libraries') . '</h2><div class="description">' . t('These libraries are registered but not installed. They may not need to be installed in case a module or theme provides optional integration with a library.') . '</div>',
   );
 
   // Build table of unregistered libraries.
@@ -104,12 +106,13 @@ function libraries_admin_overview(array $form, array &$form_state) {
     );
   }
   $form['libraries']['unregistered'] = array(
-    '#theme' => 'table',
+    '#theme' => 'libraries_table_with_title',
+    '#title' => t('Unregistered'),
     '#header' => $header_unregistered,
     '#rows' => $rows_unregistered,
+    '#description' => t('These libraries were found in the filesystem but there is no metadata about them.'),
     // Do not show the table at all, if there are no unregistered libraries.
     '#access' => (bool) $libraries_unregistered,
-    '#prefix' => '<h2>' . t('Unregistered libraries') . '</h2><div class="description">' . t('These libraries were found in the filesystem but there is no metadata about them.') . '</div>',
   );
 
   return $form;
