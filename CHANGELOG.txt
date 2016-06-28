@@ -1,5 +1,6 @@
 Libraries 7.x-2.x, xxxx-xx-xx
 -----------------------------
+#2745763 by Albert Volkman, tstoeckler: Allow downloading all libraries at once.
 #2310753 by tstoeckler: Avoid libraries_get_libraries() scanning the root.
 #2341955 by sadashiv, tstoeckler: Clear library cache on library report.
 #819610 by tstoeckler: Show variants and dependencies in the UI.
