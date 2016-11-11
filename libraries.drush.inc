@@ -44,10 +44,7 @@ function libraries_drush_cache_clear(array &$types) {
  * Clears the library cache.
  */
 function libraries_drush_invalidate_cache() {
-  // @see drupal_flush_all_caches()
-  foreach (libraries_flush_caches() as $table) {
-    cache_clear_all('*', $table, TRUE);
-  }
+  libraries_cache_clear();
 }
 
 /**

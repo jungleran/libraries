@@ -26,6 +26,29 @@ function libraries_flush_caches() {
 }
 
 /**
+ * Implements hook_admin_menu_cache_info().
+ */
+function libraries_admin_menu_cache_info() {
+  $caches['libraries'] = array(
+    'title' => t('Libraries'),
+    'callback' => 'libraries_cache_clear',
+  );
+  return $caches;
+}
+
+/**
+ * Clears the cached library information.
+ */
+function libraries_cache_clear() {
+  foreach (libraries_flush_caches() as $bin) {
+    // Using the wildcard argument leads to DrupalDatabaseCache::clear()
+    // truncating the libraries cache table which is more performant that
+    // deleting the rows.
+    cache_clear_all('*', $bin, TRUE);
+  }
+}
+
+/**
  * Gets the path of a library.
  *
  * @param $name

@@ -124,9 +124,7 @@ function libraries_admin_overview(array $form, array &$form_state) {
   // it was just downloaded. Because these instructions use libraries_detect()
   // directly, they will never use the cached information, but this avoids the
   // overview showing a library as installed but it not being loadable.
-  foreach (libraries_flush_caches() as $bin) {
-    cache_clear_all(NULL, $bin);
-  }
+  libraries_cache_clear();
 
   return $form;
 }
