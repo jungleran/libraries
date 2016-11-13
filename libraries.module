@@ -918,6 +918,35 @@ function libraries_get_version($library, $options) {
 }
 
 /**
+ * Gets the version information from a library's package.json file.
+ *
+ * @param $library
+ *   An associative array containing all information about the library.
+ * @param $options
+ *   This callback expects no option.
+ * @return
+ *   A string containing the version of the library.
+ *
+ * @see libraries_get_path()
+ */
+function libraries_get_package_json_version($library, $options) {
+  $file = DRUPAL_ROOT . '/' . $library['library path'] . '/package.json';
+  if (!file_exists($file)) {
+    return;
+  }
+
+  $content = file_get_contents($file);
+  if (!$content) {
+    return;
+  }
+
+  $data = drupal_json_decode($content);
+  if (isset($data['version'])) {
+    return $data['version'];
+  }
+}
+
+/**
  * Implements hook_help().
  */
 function libraries_help($path, $arg) {
