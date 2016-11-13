@@ -928,6 +928,17 @@ function libraries_help($path, $arg) {
 }
 
 /**
+ * Implements hook_permission().
+ */
+function libraries_permission() {
+  return array(
+    'access library reports' => array(
+      'title' => t('View library reports'),
+    ),
+  );
+}
+
+/**
  * Implements hook_menu().
  */
 function libraries_menu() {
@@ -937,7 +948,7 @@ function libraries_menu() {
     'description' => 'An overview of libraries installed on this site.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('libraries_admin_overview'),
-    'access arguments' => array('access site reports'),
+    'access arguments' => array('access library reports'),
     'file' => 'libraries.admin.inc'
   );
   $items['admin/reports/libraries/%libraries_ui'] = array(
@@ -945,7 +956,7 @@ function libraries_menu() {
     'description' => 'Status overview for a single library',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('libraries_admin_library_status_form', 3),
-    'access arguments' => array('access site reports'),
+    'access arguments' => array('access library reports'),
     'file' => 'libraries.admin.inc'
   );
   return $items;
