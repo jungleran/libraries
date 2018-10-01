@@ -103,7 +103,7 @@ function libraries_get_libraries() {
   // $config and $profile should never be empty in a proper Drupal setup.
   // However, we should never search into the root filesystem under any
   // circumstances, so just bail out in that case.
-  if (!$profile || !$config) {
+  if (!$profile && !$config) {
     return array();
   }
 
