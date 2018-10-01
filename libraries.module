@@ -123,6 +123,13 @@ function libraries_get_libraries() {
   $profile = drupal_get_path('profile', drupal_get_profile());
   $config = conf_path();
 
+  // $config and $profile should never be empty in a proper Drupal setup.
+  // However, we should never search into the root filesystem under any
+  // circumstances, so just bail out in that case.
+  if (!$profile && !$config) {
+    return array();
+  }
+
   // Similar to 'modules' and 'themes' directories in the root directory,
   // certain distributions may want to place libraries into a 'libraries'
   // directory in Drupal's root directory.
