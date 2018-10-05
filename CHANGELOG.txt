@@ -1,5 +1,5 @@
 
-Libraries 7.x-2.x, 2018-10-1
+Libraries 7.x-2.5, 2018-10-5
 -----------------------------
 #2815965 by plach, Manav, tstoeckler, Proteo: Base theme is not loaded when checking for theme library info
 #2999116 by Anghelu, joshbrown81: Finds no library after update
