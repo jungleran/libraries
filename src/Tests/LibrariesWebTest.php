@@ -3,14 +3,14 @@
 namespace Drupal\libraries\Tests;
 
 use Drupal\Component\Utility\Html;
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests basic detection and loading of libraries.
  *
  * @group libraries
  */
-class LibrariesWebTest extends WebTestBase {
+class LibrariesWebTest extends BrowserTestBase {
 
   /**
    * {@inheritdoc}

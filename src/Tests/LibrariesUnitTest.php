@@ -2,7 +2,7 @@
 
 namespace Drupal\libraries\Tests;
 
-use Drupal\simpletest\KernelTestBase;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Tests basic Libraries API functions.

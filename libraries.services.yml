@@ -4,6 +4,8 @@ services:
     arguments:
       - '@libraries.definition.discovery'
       - '@plugin.manager.libraries.library_type'
+      - '@extension.list.module'
+      - '@extension.list.theme'
 
   # By default Libraries API downloads library definitions from a number of
   # remote library registries, the canonical one being
