@@ -7,6 +7,8 @@ use Drupal\libraries\ExternalLibrary\Exception\LibraryTypeNotFoundException;
 use Drupal\libraries\ExternalLibrary\Type\LibraryCreationListenerInterface;
 use Drupal\libraries\ExternalLibrary\Type\LibraryLoadingListenerInterface;
 use Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Extension\ThemeExtensionList;
 
 /**
  * Provides a manager for external libraries.
@@ -32,19 +34,41 @@ class LibraryManager implements LibraryManagerInterface {
   protected $libraryTypeFactory;
 
   /**
+   * Module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $moduleExtensionList;
+
+  /**
+   * Theme extension list service.
+   *
+   * @var \Drupal\Core\Extension\ThemeExtensionList
+   */
+  protected $themeExtensionList;
+
+  /**
    * Constructs an external library manager.
    *
    * @param \Drupal\libraries\ExternalLibrary\Definition\DefinitionDiscoveryInterface $definition_disovery
    *   The library registry.
    * @param \Drupal\Component\Plugin\Factory\FactoryInterface $library_type_factory
    *   The library type factory.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $module_extension_list
+   *   Module extension list service.
+   * @param \Drupal\Core\Extension\ThemeExtensionList $theme_extension_list
+   *   Theme extension list service.
    */
   public function __construct(
     DefinitionDiscoveryInterface $definition_disovery,
-    FactoryInterface $library_type_factory
+    FactoryInterface $library_type_factory,
+    ModuleExtensionList $module_extension_list,
+    ThemeExtensionList $theme_extension_list
   ) {
     $this->definitionDiscovery = $definition_disovery;
     $this->libraryTypeFactory = $library_type_factory;
+    $this->moduleExtensionList = $module_extension_list;
+    $this->themeExtensionList = $theme_extension_list;
   }
 
   /**
@@ -61,7 +85,7 @@ class LibraryManager implements LibraryManagerInterface {
   public function getRequiredLibraryIds() {
     $library_ids = [];
     foreach (['module', 'theme'] as $type) {
-      foreach (system_get_info($type) as $info) {
+      foreach ($this->{$type . 'ExtensionList'}->getAllInstalledInfo() as $info) {
         if (isset($info['library_dependencies'])) {
           $library_ids = array_merge($library_ids, $info['library_dependencies']);
         }
